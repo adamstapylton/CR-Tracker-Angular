@@ -1,0 +1,17 @@
+<h3>CR Tracker</h3>
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <label>Include on Hold Change Requests</label>
+      <input type="checkbox" (change)="changeOnHold()" [(ngModel)]="includeOnHold" />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="card" *ngFor="let changeRequest of changeRequests">
+    <div class="card-header">
+      <h4>{{ changeRequest.changeRequestId }}</h4>
+    </div>
+  </div>
+
+</div>
