@@ -32,6 +32,7 @@
     <None Remove="ClientApp\src\app\models\stage.ts" />
     <None Remove="ClientApp\src\app\models\worktype.ts" />
     <None Remove="ClientApp\src\app\services\change-request.service.ts" />
+    <None Remove="ClientApp\src\app\services\stages.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +41,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\stage.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\worktype.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\change-request.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\stages.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

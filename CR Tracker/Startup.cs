@@ -28,7 +28,9 @@ namespace CR_Tracker
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddScoped<IStageRepository, StageRepository>();
             services.AddScoped<IChangeRequestRepository, ChangeRequestRepository>();
+           // services.AddSingleton<IChangeRequestRepository, MockChangeRequestRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

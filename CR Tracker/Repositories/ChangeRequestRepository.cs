@@ -31,8 +31,8 @@ namespace CR_Tracker.Repositories
                     Description = changeRequest.Description,
                     DateRaised = changeRequest.DateRaised.ToString("s"),
                     DateRequired = changeRequest.DateRequired.ToString("s"),
-                    AssignedTo = changeRequest.AssignedToUserId,
-                    RaisedBy = changeRequest.RaisedByUserId,
+                    AssignedTo = changeRequest.AssignedToUser.UserId,
+                    RaisedBy = changeRequest.RaisedByUser.UserId,
                     BillingRules = changeRequest.BillingRulesRequired,
                     OnHold = changeRequest.OnHold,
                     StageId = changeRequest.Stage.StageId
@@ -104,25 +104,30 @@ namespace CR_Tracker.Repositories
 
                     if (includeOnHold)
                     {
-                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder
+                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
+								RaisedByUser.UserId AS RaisedByUserId, RaisedByUser.UserId ,RaisedByUser.Initials, RaisedByUser.FirstName, RaisedByUser.Surname, RaisedByUser.Email
                                 FROM ChangeRequests
-                                INNER JOIN Stages ON ChangeRequests.StageId = Stages.StageId;";
+                                INNER JOIN Stages ON ChangeRequests.StageId = Stages.StageId
+								INNER JOIN Users AS RaisedByUser ON RaisedByUserId = RaisedByUser.UserId;";
                     }
                     else
                     {
-                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder
+                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
+								RaisedByUser.UserId AS RaisedByUserId, RaisedByUser.UserId ,RaisedByUser.Initials, RaisedByUser.FirstName, RaisedByUser.Surname, RaisedByUser.Email
                                 FROM ChangeRequests
                                 INNER JOIN Stages ON ChangeRequests.StageId = Stages.StageId
+								INNER JOIN Users AS RaisedByUser ON RaisedByUserId = RaisedByUser.UserId
                                 WHERE OnHold IS NULL OR OnHold = 0;";
                     }
                     
 
-                    var results = await conn.QueryAsync<ChangeRequest, Stage, ChangeRequest>(query,
-                        (cr, stage) => {
+                    var results = await conn.QueryAsync<ChangeRequest, Stage, User, ChangeRequest>(query,
+                        (cr, stage, raisedUser) => {
                             cr.Stage = stage;
+                            cr.RaisedByUser = raisedUser;
                             return cr;
                         },
-                        splitOn: "StageId");
+                        splitOn: "StageId, RaisedByUserId");
 
                     changeRequests = results.ToList();
 
@@ -136,6 +141,13 @@ namespace CR_Tracker.Repositories
                             WHERE ChangeRequestId = @ChangeRequestId;";
 
                         cr.Worktypes = await conn.QueryAsync<Worktype>(worktypeQuery, parameters);
+
+                        var assignedToQuery = @"SELECT UserId, Initials, FirstName, Surname, Email
+                            FROM ChangeRequests
+                            INNER JOIN Users On ChangeRequests.AssignedToUserId = UserId
+                            WHERE ChangeRequestId = @ChangeRequestId";
+
+                        cr.AssignedToUser = await conn.QuerySingleOrDefaultAsync<User>(assignedToQuery, parameters);
                     }
 
                 }
@@ -155,7 +167,7 @@ namespace CR_Tracker.Repositories
             {
                 var changeRequests = await GetChangeRequests(includeOnHold);
 
-                return changeRequests.Where(cr => cr.AssignedToUserId == userId);
+                return changeRequests.Where(cr => cr.AssignedToUser.UserId == userId);
 
             }
             catch (Exception)
@@ -191,8 +203,8 @@ namespace CR_Tracker.Repositories
                     Description = changeRequest.Description,
                     DateRaised = changeRequest.DateRaised.ToString("s"),
                     DateRequired = changeRequest.DateRequired.ToString("s"),
-                    AssignedTo = changeRequest.AssignedToUserId,
-                    RaisedBy = changeRequest.RaisedByUserId,
+                    AssignedTo = changeRequest.AssignedToUser.UserId,
+                    RaisedBy = changeRequest.RaisedByUser.UserId,
                     BillingRules = changeRequest.BillingRulesRequired,
                     OnHold = changeRequest.OnHold,
                     StageId = changeRequest.Stage.StageId

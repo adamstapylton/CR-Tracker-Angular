@@ -22,10 +22,10 @@ namespace CR_Tracker.Models
         public DateTime DateRequired { get; set; }
 
 
-        public int AssignedToUserId { get; set; }
+        public User AssignedToUser { get; set; }
 
 
-        public int RaisedByUserId { get; set; }
+        public User RaisedByUser { get; set; }
 
 
         public IEnumerable<Worktype> Worktypes { get; set; }

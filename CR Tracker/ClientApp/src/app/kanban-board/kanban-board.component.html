@@ -8,10 +8,18 @@
   </div>
 </div>
 <div class="row">
-  <div class="card" *ngFor="let changeRequest of changeRequests">
-    <div class="card-header">
-      <h4>{{ changeRequest.changeRequestId }}</h4>
-    </div>
-  </div>
 
+  <div class="col" *ngFor="let stage of stages">
+    <div>
+      <h6>{{ stage.stageName }}</h6>
+    </div>
+    <div *ngFor="let changeRequest of changeRequests">
+      <div class="card" *ngIf="changeRequest.stage.stageId == stage.stageId">
+        <div class="card-header">
+          <h4>{{ changeRequest.changeRequestId }}</h4>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

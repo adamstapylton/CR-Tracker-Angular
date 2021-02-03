@@ -11,6 +11,8 @@ namespace CR_Tracker.Models
         public string FirstName { get; set; }
         [Required]
         public string Surname { get; set; }
-        
+
+        public string Email { get; set; }
+
     }
 }
