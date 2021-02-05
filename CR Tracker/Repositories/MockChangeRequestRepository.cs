@@ -50,7 +50,6 @@ namespace CR_Tracker.Repositories
                 {
                     ChangeRequestId = "PSG5555",
                     Description = "A New Bug to sort out",
-                    DateRaised = DateTime.Now,
                     //DateRequired = null,
                     AssignedToUser = Users.Where(u => u.UserId == 1).FirstOrDefault(),
                     RaisedByUser = Users.Where(u => u.UserId == 2).FirstOrDefault(),

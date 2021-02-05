@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { CrFormComponent } from './cr-form/cr-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    KanbanBoardComponent
+    KanbanBoardComponent,
+    CrFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

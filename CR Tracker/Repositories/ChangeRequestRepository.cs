@@ -25,24 +25,53 @@ namespace CR_Tracker.Repositories
         {
             try
             {
-                var parameters = new
-                {
-                    ChangeRequestId = changeRequest.ChangeRequestId,
-                    Description = changeRequest.Description,
-                    DateRaised = changeRequest.DateRaised.ToString("s"),
-                    DateRequired = changeRequest.DateRequired.ToString("s"),
-                    AssignedTo = changeRequest.AssignedToUser.UserId,
-                    RaisedBy = changeRequest.RaisedByUser.UserId,
-                    BillingRules = changeRequest.BillingRulesRequired,
-                    OnHold = changeRequest.OnHold,
-                    StageId = changeRequest.Stage.StageId
+                string query;
+                object parameters;
 
-                };
+                if (changeRequest.DateRequired == DateTime.MinValue)
+                {
+                    parameters = new
+                    {
+                        ChangeRequestId = changeRequest.ChangeRequestId,
+                        Description = changeRequest.Description,
+                        //AssignedToUser = changeRequest.AssignedToUser,
+                        RaisedByUserId = changeRequest.RaisedByUser.UserId,
+                        BillingRules = changeRequest.BillingRulesRequired,
+                        OnHold = changeRequest.OnHold,
+                        StageId = 1
+
+                    };
+
+                    query = $@"INSERT INTO ChangeRequests (ChangeRequestId, Description, RaisedByUserId, BillingRulesRequired, OnHold, StageId)
+                        VALUES (@ChangeRequestId, @Description, @RaisedByUserId, @BillingRules, @OnHold, @StageId);";
+
+                }
+                else
+                {
+                    parameters = new
+                    {
+                        ChangeRequestId = changeRequest.ChangeRequestId,
+                        Description = changeRequest.Description,
+                        DateRequired = changeRequest.DateRequired,
+                        //AssignedToUser = changeRequest.AssignedToUser,
+                        RaisedByUserId = changeRequest.RaisedByUser.UserId,
+                        BillingRules = changeRequest.BillingRulesRequired,
+                        OnHold = changeRequest.OnHold,
+                        StageId = 1
+
+                    };
+
+                    query = $@"INSERT INTO ChangeRequests (ChangeRequestId, Description, DateRequired, RaisedByUserId, BillingRulesRequired, OnHold, StageId)
+                        VALUES (@ChangeRequestId, @Description, @DateRequired, @RaisedByUserId, @BillingRules, @OnHold, @StageId);";
+                }
+
+
+                
+
 
                 using (var conn = new SqlConnection(ConnectionString))
                 {
-                    var query = @"INSERT INTO ChangeRequests (ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, StageId)
-                        VALUES (@ChangeRequestId, @Description, @DateRaised, @DateRequired, @AssignedTo, @RaisedBy, @BillingRules, @OnHold, @StageId);";
+                    
                     await conn.ExecuteAsync(query, parameters);
 
                     foreach (var worktype in changeRequest.Worktypes)
@@ -104,7 +133,7 @@ namespace CR_Tracker.Repositories
 
                     if (includeOnHold)
                     {
-                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
+                        query = @"SELECT ChangeRequestId, Description,  DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
 								RaisedByUser.UserId AS RaisedByUserId, RaisedByUser.UserId ,RaisedByUser.Initials, RaisedByUser.FirstName, RaisedByUser.Surname, RaisedByUser.Email
                                 FROM ChangeRequests
                                 INNER JOIN Stages ON ChangeRequests.StageId = Stages.StageId
@@ -112,7 +141,7 @@ namespace CR_Tracker.Repositories
                     }
                     else
                     {
-                        query = @"SELECT ChangeRequestId, Description, DateRaised, DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
+                        query = @"SELECT ChangeRequestId, Description,  DateRequired, AssignedToUserId, RaisedByUserId, BillingRulesRequired, OnHold, Stages.StageId, StageName, StageOrder, 
 								RaisedByUser.UserId AS RaisedByUserId, RaisedByUser.UserId ,RaisedByUser.Initials, RaisedByUser.FirstName, RaisedByUser.Surname, RaisedByUser.Email
                                 FROM ChangeRequests
                                 INNER JOIN Stages ON ChangeRequests.StageId = Stages.StageId
@@ -201,7 +230,6 @@ namespace CR_Tracker.Repositories
                 {
                     ChangeRequestId = changeRequest.ChangeRequestId,
                     Description = changeRequest.Description,
-                    DateRaised = changeRequest.DateRaised.ToString("s"),
                     DateRequired = changeRequest.DateRequired.ToString("s"),
                     AssignedTo = changeRequest.AssignedToUser.UserId,
                     RaisedBy = changeRequest.RaisedByUser.UserId,
@@ -213,7 +241,6 @@ namespace CR_Tracker.Repositories
                 using (var conn = new SqlConnection(ConnectionString))
                 {
                     var query = @"UPDATE ChangeRequests SET Description = @Description, 
-							DateRaised = @DateRaised, 
 							DateRequired = @DateRequired, 
 							AssignedToUserId = @AssignedTo, 
 							RaisedByUserId = @RaisedBy, 

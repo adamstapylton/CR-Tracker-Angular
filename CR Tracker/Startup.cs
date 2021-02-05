@@ -29,7 +29,9 @@ namespace CR_Tracker
             });
 
             services.AddScoped<IStageRepository, StageRepository>();
+            services.AddScoped<IWorktypeRepository, WorktypeRepository>();
             services.AddScoped<IChangeRequestRepository, ChangeRequestRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
            // services.AddSingleton<IChangeRequestRepository, MockChangeRequestRepository>();
         }
 

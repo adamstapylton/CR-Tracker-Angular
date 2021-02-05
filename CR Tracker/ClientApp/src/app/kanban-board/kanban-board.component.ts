@@ -15,7 +15,7 @@ export class KanbanBoardComponent implements OnInit {
   stages: Stage[];
   errorMessage: string;
   stagesError: string;
-  includeOnHold: boolean = true; 
+  includeOnHold: boolean = true;
 
   constructor(private changeRequestService: ChangeRequestService, private stageService: StageService) { }
 

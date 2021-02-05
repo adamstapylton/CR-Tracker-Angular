@@ -62,6 +62,16 @@ namespace CR_Tracker.Controllers
         {
             try
             {
+                if (changeRequest == null)
+                {
+                    return BadRequest("No Change Request sent through");
+                }
+
+                if (await changeRequestRepository.GetCRById(changeRequest.ChangeRequestId) != null)
+                {
+                    return BadRequest("Change Request with this Id already exists");
+                }
+
                 var addedCr = await changeRequestRepository.AddChangeRequest(changeRequest);
 
                 if(addedCr != null)

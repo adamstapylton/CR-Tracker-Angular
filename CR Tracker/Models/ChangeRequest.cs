@@ -15,10 +15,7 @@ namespace CR_Tracker.Models
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public DateTime DateRaised { get; set; }
-
-
+        
         public DateTime DateRequired { get; set; }
 
 

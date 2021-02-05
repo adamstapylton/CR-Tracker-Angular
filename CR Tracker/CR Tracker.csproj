@@ -30,18 +30,24 @@
     <None Remove="ClientApp\src\app\models\changeRequest.ts" />
     <None Remove="ClientApp\src\app\models\Note.ts" />
     <None Remove="ClientApp\src\app\models\stage.ts" />
+    <None Remove="ClientApp\src\app\models\user.ts" />
     <None Remove="ClientApp\src\app\models\worktype.ts" />
     <None Remove="ClientApp\src\app\services\change-request.service.ts" />
     <None Remove="ClientApp\src\app\services\stages.service.ts" />
+    <None Remove="ClientApp\src\app\services\user.service.ts" />
+    <None Remove="ClientApp\src\app\services\worktype.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\models\changeRequest.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Note.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\stage.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\worktype.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\change-request.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\stages.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\user.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\worktype.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
