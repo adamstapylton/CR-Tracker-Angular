@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ChangeRequest } from '../models/changeRequest';
-import { ChangeRequestService } from '../services/change-request.service';
-import { Stage } from '../models/stage';
-import { StageService } from '../services/stages.service';
+import { ChangeRequest } from '../../models/changeRequest';
+import { ChangeRequestService } from '../../services/change-request.service';
+import { StageService } from '../../services/stages.service';
+import { Stage } from '../../models/stage';
 
 @Component({
   selector: 'app-kanban-board',
@@ -16,6 +16,7 @@ export class KanbanBoardComponent implements OnInit {
   errorMessage: string;
   stagesError: string;
   includeOnHold: boolean = true;
+  crToDeleteId: string = 'test delete';
 
   constructor(private changeRequestService: ChangeRequestService, private stageService: StageService) { }
 
@@ -41,6 +42,19 @@ export class KanbanBoardComponent implements OnInit {
   changeOnHold(): void {
     this.updateChangeRequests();
   }
+
+  selectCrToDelete(crId: string): void {
+    this.crToDeleteId = crId;
+  }
+
+  deleteChangeRequest(): void {
+    this.changeRequestService.deleteChangeRequest(this.crToDeleteId).subscribe(
+      x => console.log(x),
+      err => console.log(err),
+      () => { this.updateChangeRequests(), closeModal('#deleteCrModal') }
+    );
+
+  } 
 
 
 }

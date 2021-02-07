@@ -102,7 +102,7 @@ namespace CR_Tracker.Controllers
 
                 if (await changeRequestRepository.DeleteChangeRequest(changeRequestId) > 0)
                 {
-                    return Ok("Change Request Deleted");
+                    return Ok();
                 }
 
                 return BadRequest("Unable to delete change request");

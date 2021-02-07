@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
@@ -24,20 +24,30 @@ export class ChangeRequestService {
   }
 
   addChangeRequest(changeRequest: ChangeRequest): Observable<ChangeRequest> {
-    console.log('starting add cr request');
-    return this.http.post<ChangeRequest>(this.changeRequestUrl, changeRequest).pipe(
-      catchError(this.handleError),
-      tap(data => console.log(JSON.stringify(data)))
-    );
+    return this.http.post<ChangeRequest>(this.changeRequestUrl, changeRequest)
+      .pipe(
+        catchError(this.handleError)
+      );
 
+  }
+
+  deleteChangeRequest(changeRequestId: string): Observable<{}> {
+    return this.http.delete(`${this.changeRequestUrl}/${changeRequestId}`)
+      .pipe(
+      catchError(this.handleError)
+    )
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message)
+    } else if (error.error.title != undefined) {
+      console.error(error.error.title)
+      return throwError(error.error.title);
     } else {
-      console.error(error.message)
+      console.error(error.error)
+      return throwError(error.error);
     }
-    return throwError(error.message);
+    
   }
 }
