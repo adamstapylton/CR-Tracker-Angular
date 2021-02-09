@@ -261,6 +261,28 @@ namespace CR_Tracker.Repositories
             }
         }
 
+        public async Task<int> UpdateChangeRequestStage(string crId, int stageId)
+        {
+            try
+            {
+                var parameters = new
+                {
+                    ChangeRequestId = crId,
+                    StageId = stageId
+                };
 
+                using (var conn = new SqlConnection(ConnectionString))
+                {
+                    var query = @"UPDATE ChangeRequests SET StageId = @StageId WHERE ChangeRequestId = @ChangeRequestId";
+
+                    return await conn.ExecuteAsync(query, parameters);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

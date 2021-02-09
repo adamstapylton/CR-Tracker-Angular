@@ -30,7 +30,9 @@ export class KanbanBoardComponent implements OnInit {
     });
   };
 
-  updateChangeRequests():void {
+  updateChangeRequests(): void {
+    $('.item-moved').remove();
+    this.changeRequests = null;
     this.changeRequestService.getChangeRequests(this.includeOnHold).subscribe({
       next: changeRequests => {
         this.changeRequests = changeRequests;
@@ -53,6 +55,8 @@ export class KanbanBoardComponent implements OnInit {
       err => console.log(err),
       () => { this.updateChangeRequests(), closeModal('#deleteCrModal') }
     );
+
+
 
   } 
 

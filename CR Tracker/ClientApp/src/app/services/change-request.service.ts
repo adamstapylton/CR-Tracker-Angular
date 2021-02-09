@@ -17,9 +17,9 @@ export class ChangeRequestService {
 
   getChangeRequests(includeOnHold): Observable<ChangeRequest[]> {
     let params = new HttpParams().set('includeOnHold', includeOnHold)
-    return this.http.get<ChangeRequest[]>(this.changeRequestUrl, {params: params})
+    return this.http.get<ChangeRequest[]>(this.changeRequestUrl, { params: params })
       .pipe(
-        tap(data => console.log(JSON.stringify(data)))
+        catchError(this.handleError)
       );
   }
 

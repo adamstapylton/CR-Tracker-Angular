@@ -147,5 +147,27 @@ namespace CR_Tracker.Controllers
                 throw;
             }
         }
+
+        [HttpPatch("{changeRequestId}")]
+        public async Task<IActionResult> UpdateCrStage(string changeRequestId, int stageId)
+        {
+            try
+            {
+                var results = await changeRequestRepository.UpdateChangeRequestStage(changeRequestId, stageId);
+
+                if (results > 0)
+                {
+                    var changeRequest = await changeRequestRepository.GetCRById(changeRequestId);
+                    return Ok(changeRequest);
+                }
+
+                return BadRequest("Unable to Update CR Stage");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

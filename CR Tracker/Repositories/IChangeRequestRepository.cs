@@ -13,6 +13,7 @@ namespace CR_Tracker.Repositories
         Task<IEnumerable<ChangeRequest>> GetChangeRequestsByUser(int userId, bool includeOnHold);
         Task<ChangeRequest> AddChangeRequest(ChangeRequest changeRequest);
         Task<ChangeRequest> UpdateChangeRequest(ChangeRequest changeRequest);
+        Task<int> UpdateChangeRequestStage(string crId, int stageId);
         Task<int> DeleteChangeRequest(string crId);
     }
 }

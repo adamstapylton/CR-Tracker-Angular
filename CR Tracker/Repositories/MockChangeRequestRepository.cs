@@ -115,5 +115,10 @@ namespace CR_Tracker.Repositories
             changeRequestToUpdate = changeRequest;
             return changeRequest;
         }
+
+        public Task<int> UpdateChangeRequestStage(string crId, int stageId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
