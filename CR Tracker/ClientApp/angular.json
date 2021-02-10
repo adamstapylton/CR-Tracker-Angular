@@ -29,7 +29,8 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "src/assets/js/jquery-ui.js",
-              "src/assets/js/app.js"
+              "src/assets/js/app.js",
+              "node_modules/@fortawesome/fontawesome-free/js/all.js"
             ]
           },
           "configurations": {

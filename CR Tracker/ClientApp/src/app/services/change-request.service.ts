@@ -23,6 +23,13 @@ export class ChangeRequestService {
       );
   }
 
+  getChangeRequestById(changeRequestId: string): Observable<ChangeRequest> {
+    return this.http.get<ChangeRequest>(`${this.changeRequestUrl}/${changeRequestId}`)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
+
   addChangeRequest(changeRequest: ChangeRequest): Observable<ChangeRequest> {
     return this.http.post<ChangeRequest>(this.changeRequestUrl, changeRequest)
       .pipe(

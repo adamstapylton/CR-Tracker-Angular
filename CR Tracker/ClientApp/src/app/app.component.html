@@ -1,7 +1,14 @@
 <body>
   <app-nav-menu></app-nav-menu>
-  <div class="container-fluid">
-    <router-outlet></router-outlet>
+
+    
+  <div id="navAndContentContainer">
+    <app-side-nav-menu id="sideNavContainer"></app-side-nav-menu>
+    <div id="mainContent">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
 
 </body>

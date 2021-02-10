@@ -19,7 +19,7 @@ import { DetailsComponent } from './details/details.component';
     FormsModule,
     RouterModule.forChild([
       { path: 'change-requests/kanban-board', component: KanbanBoardComponent },
-      { path: 'change-request/details', component: DetailsComponent }
+      { path: 'change-requests/details/:id', component: DetailsComponent }
     ])
   ]
 })

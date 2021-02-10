@@ -1,1 +1,12 @@
-<p>details works!</p>
+<div class="row pt-2">
+  <div class="col">
+    <div class="alert alert-danger col" *ngIf="errorMessage != null">
+      <span>{{ errorMessage }}</span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div *ngIf="changeRequest != null">
+    <h2>{{ changeRequest.changeRequestId }}</h2>
+  </div>
+</div>

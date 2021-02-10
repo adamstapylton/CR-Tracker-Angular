@@ -1,5 +1,11 @@
 .cr-kanban-list-item {
     list-style: none;
+    padding: 1px;
+}
+
+.cr-kanban-list-item > .card{
+    background-color: #e6e6e6;
+    border: none;
 }
 
 .cr-kanban-list {
@@ -11,6 +17,33 @@
     padding: 0;
 }
 
+.stage-title{
+    border-radius: 5px
+}
+
+#kanbanContainer {
+  margin: 0 5px 0 5px;
+  background-color: white;
+  border-radius: 5px;
+}
+
 #kanbanBoardButtons > .list-group-item {
   border: none;
+  background: none;
+}
+
+.kanban-dropdown-item {
+  color: white;
+}
+
+.kanban-dropdown-item:hover {
+    color: black;
+}
+
+.stage-column {
+    padding: 0;
+}
+
+.dropdown-toggle:after {
+  content: none;
 }

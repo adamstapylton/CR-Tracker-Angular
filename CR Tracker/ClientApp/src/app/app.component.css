@@ -1,0 +1,19 @@
+#navAndContentContainer{
+    padding-top: 57px;
+    height: 100%;
+}
+
+#sideNavContainer {
+  position: fixed;
+  width: 175px;
+  height: 100%;
+}
+
+#mainContent {
+  position: relative;
+  height: 100%;
+  margin-left: 175px !important;
+  background-color: #e6e6e6;
+  height: 100% !important;
+  margin: 0;
+}

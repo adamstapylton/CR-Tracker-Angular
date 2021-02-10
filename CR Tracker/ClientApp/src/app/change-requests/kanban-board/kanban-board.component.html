@@ -10,46 +10,62 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <ng-container *ngFor="let stage of stages">
-    <div class="col " *ngIf="stage.stageId != 8" >
-      <div class="text-center bg-dark text-white">
-        <h6>{{ stage.stageName }}</h6>
-      </div>
-      <ul class="sortableList connectedList cr-kanban-list" [attr.data-id]="stage.stageId">
-        <ng-container *ngFor="let changeRequest of changeRequests">
-          <ng-container *ngIf="changeRequest.stage.stageId == stage.stageId">
-            <li class="cr-kanban-list-item" [attr.data-id]="changeRequest.changeRequestId">
-              <div class="card bg-light">
+<div id="kanbanContainer" class="row">
 
-                <div class="card-body">
-                  <div class="row">
-                    <h5>{{ changeRequest.changeRequestId }}</h5>
-                  </div>
-                  <div class="row">
-                    <span>{{ changeRequest.description }}</span>
-                  </div>
-                  <div class="row d-flex">
-                    <div class="btn-group ml-auto mr-1">
-                      <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                      </button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Details</a>
-                        <button class="dropdown-item" data-toggle="modal" data-target="#deleteCrModal" (click)="selectCrToDelete(changeRequest.changeRequestId)">Delete</button>
+    <ng-container *ngFor="let stage of stages">
+      <div class="col stage-column" *ngIf="stage.stageId != 8">
+        <div class="text-center bg-dark text-white stage-title">
+          <h6>{{ stage.stageName }}</h6>
+        </div>
+        <ul class="sortableList connectedList cr-kanban-list" [attr.data-id]="stage.stageId">
+          <ng-container *ngFor="let changeRequest of changeRequests">
+            <ng-container *ngIf="changeRequest.stage.stageId == stage.stageId">
+              <li class="cr-kanban-list-item" [attr.data-id]="changeRequest.changeRequestId">
+                <div class="card">
+
+                  <div class="card-body py-1">
+                    <div class="row">
+                      <h5>{{ changeRequest.changeRequestId }}</h5>
+                    </div>
+                    <div class="row">
+                      <span>{{ changeRequest.description }}</span>
+                    </div>
+                    <div class="row d-flex">
+                      <div *ngIf="changeRequest.billingRulesRequired">
+                        <i class="fas fa-file-invoice-dollar text-primary"></i>
+                      </div>
+                      <div>
+                        <span>{{ changeRequest.dateRequired }}</span>
+                      </div>
+                      <div class="btn-group ml-auto mr-1">
+                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h text-primary"></i>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right bg-dark">
+                          <a class="dropdown-item kanban-dropdown-item" [routerLink]="['/change-requests/details', changeRequest.changeRequestId]">
+                            <i class="fas fa-info-circle text-success mr-2"></i>
+                            <span class="">Details</span>
+                          </a>
+                          <button class="dropdown-item kanban-dropdown-item" data-toggle="modal" data-target="#deleteCrModal" (click)="selectCrToDelete(changeRequest.changeRequestId)">
+                            <i class="far fa-trash-alt text-danger mr-2"></i>
+                            <span class="">Delete</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </ul>
+        </ul>
 
 
-    </div>
-  </ng-container>
+      </div>
+    </ng-container>
+ 
+
 </div>
 
 <div id="addCrModal" class="modal fade" tabindex="-1" role="dialog">

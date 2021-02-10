@@ -1,0 +1,19 @@
+.side-nav{
+
+    background-color:white;
+}
+
+#sideNavList{
+    list-style: none;
+    padding-left: 0;
+}
+
+.link-active {
+  background-color: #1b6ec2;
+  
+  border-radius: 5px;
+}
+
+  .link-active > a {
+    color: white !important;
+  }
